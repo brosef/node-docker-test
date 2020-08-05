@@ -1,0 +1,17 @@
+sudo: required
+language: generic
+services:
+  - docker
+env:
+  global:
+    - AWS_REGION="us-east-1"
+before_install:
+  - pip install awscli
+  - export PATH=$PATH:$HOME/.local/bin
+script:
+  -  docker build -t myapp .
+deploy:
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: master
