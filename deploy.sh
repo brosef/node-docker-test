@@ -1,4 +1,4 @@
-REGISTRY_URL="${AWS_ACCOUNT}.ecr.${AWS_REGION}.amazonaws.com"
+REGISTRY_URL="${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 SOURCE_IMAGE="myapp"
 TARGET_IMAGE="${REGISTRY_URL}/myapp"
 TARGET_IMAGE_LATEST="${TARGET_IMAGE}:latest"
