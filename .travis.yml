@@ -6,10 +6,10 @@ env:
   global:
     - AWS_REGION="us-east-1"
 script:
-  -  docker build -t myapp -t myapp:$TRAVIS_BUILD_NUMBER .
+  -  docker build -t myapp -t myapp:$TRAVIS_BRANCH .
 after_success:
   - pip install --user awscli
   - export PATH=$PATH:/$HOME/.local/bin
   - eval $(aws ecr get-login --region us-east-1 --no-include-email)
-  - docker tag myapp:$TRAVIS_BUILD_NUMBER $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BUILD_NUMBER
-  - docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BUILD_NUMBER 
+  - docker tag myapp:$TRAVIS_BRANCH $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BRANCH
+  - docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BRANCH
