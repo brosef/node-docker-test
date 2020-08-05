@@ -5,13 +5,11 @@ services:
 env:
   global:
     - AWS_REGION="us-east-1"
-before_install:
-  - pip install awscli
-  - export PATH=$PATH:$HOME/.local/bin
 script:
-  -  docker build -t myapp .
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+  -  docker build -t myapp -t myapp:$TRAVIS_BUILD_NUMBER .
+after_success
+  - pip install --user awscli
+  - export PATH=$PATH:/$HOME/.local/bin
+  - eval $(aws ecr get-login --region us-east-1 --no-include-email)
+  - docker tag myapp:$TRAVIS_BUILD_NUMBER $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BUILD_NUMBER
+  - docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/myapp:$TRAVIS_BUILD_NUMBER 
